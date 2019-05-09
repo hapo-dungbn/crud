@@ -12,8 +12,5 @@
 */
 
 Route::get('/', function () {
-    return redirect('/projects');
+    return view('welcome');
 });
-
-Route::resource('projects', 'ProjectsController');
-

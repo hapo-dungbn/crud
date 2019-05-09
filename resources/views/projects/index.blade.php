@@ -24,7 +24,7 @@
                 <tr>
                     <td>{{ $project->name }}</td>
                     <td>{{ $project->dob }}</td>
-                    <td>{{ $project->gender }}</td>
+                    <td>{{ $project->gender ? 'Male' : 'Female' }}</td>
                     <td>{{ $project->mail }}</td>
                     <td>{{ $project->phone }}</td>
                     <td>

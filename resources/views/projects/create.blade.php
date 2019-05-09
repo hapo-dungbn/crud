@@ -15,21 +15,15 @@
 
             @csrf
             <div>
-                <span>Photo:</span>
-                <div>
-                    <input type="file" name="avatar">
-                </div>
-            </div>
-            <div>
                 <span>Name:</span>
                 <div>
-                    <input type="text" name="name">
+                    <input type="text" name="name" value="{{ old('name') }}">
                 </div>
             </div>
             <div>
                 <span>Date of birth:</span>
                 <div>
-                    <input type="text" name="dob">
+                    <input type="date" name="dob" min="1900-01-01" max="2010-12-31" value="{{ old('dob') }}">
                 </div>
             </div>
             <div>
@@ -44,21 +38,27 @@
                 </div>
             </div>
             <div>
+                <label id="avatar">
+                    <input type="file" name="avatar" class="d-none" for="avatar" id="profile-img">
+                    <img id="profile-img-tag" src="/storage/defaultavatar.png" class="w-25">
+                </label>
+            </div>
+            <div>
                 <span>Mail:</span>
                 <div>
-                    <input type="text" name="mail">
+                    <input type="text" name="mail" value="{{ old('mail') }}">
                 </div>
             </div>
             <div>
                 <span>Phone:</span>
                 <div>
-                    <input type="text" name="phone">
+                    <input type="text" name="phone" value="{{ old('phone') }}">
                 </div>
             </div>
             <div>
                 <span>Description:</span>
                 <div>
-                    <textarea class="form-control" name="description"></textarea>
+                    <textarea class="form-control" name="description">{{ old('description') }}</textarea>
                 </div>
             </div>
 
@@ -69,7 +69,7 @@
     </div>
 
     @if ($errors -> any())
-        <div class=" d-flex justify-content-center">
+        <div>
             <ul class="bg-danger">
                 @foreach($errors->all() as $error)
                     <li class="text-white">{{ $error }}</li>
@@ -78,6 +78,5 @@
         </div>
     @endif
 
-
-
 @endsection
+

@@ -11,60 +11,67 @@ class ProjectsController extends Controller
     {
         $projects = Project::all();
 
-
         return view('projects.index', compact('projects'));
     }
 
     public function create()
-
     {
         return view('projects.create');
     }
 
     public function store()
-
     {
-        request()->file('avatar')->store('public');
-        $fileName = request()->file('avatar')->hashName();
-
-        $project = new Project();
-
-//        $project->save();
 
         $attributes = request()->validate([
-            'name'   => ['required', 'min:3', 'max:255'],
+            'name'   => ['required', 'min:4', 'max:255', 'regex:/^[a-zA-Z0-9\]*[a-zA-Z]+[a-zA-Z0-9\s]*$/'],
             'dob'    => ['required'],
             'gender' => ['required'],
-            'mail'   => ['required', 'min:3', 'max:255'],
-            'phone'  => ['required'],
+            'mail'   => ['required', 'email'],
+            'phone'  => ['required', 'regex:/^([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])$/'],
             'description' => '',
-            'avatar' => ''
+            'avatar' => ['max:3000', 'image']
         ]);
 
-        $attributes['avatar'] = $fileName;
+        if (request()->avatar) {
+            request()->file('avatar')->store('public');
+            $fileName = request()->file('avatar')->hashName();
+            $attributes['avatar'] = $fileName;
+        }
 
         Project::create($attributes);
 
         return redirect('/projects');
-
     }
 
     public function edit(Project $project)
-
     {
         return view('projects.edit', compact('project'));
     }
 
     public function update(Project $project)
-
     {
-        $project->update(request(['name', 'dob', 'gender', 'mail', 'phone', 'description', 'avatar']));
+        $attributes = request()->validate([
+            'name'   => ['required', 'min:4', 'max:255', 'regex:/^[a-zA-Z0-9\]*[a-zA-Z]+[a-zA-Z0-9\s]*$/'],
+            'dob'    => ['required'],
+            'gender' => ['required'],
+            'mail'   => ['required', 'email'],
+            'phone'  => ['required', 'min:10', 'max:11', 'regex:/^[0-9]*[0-9]$/'],
+            'description' => '',
+            'avatar' => ['max:3000', 'image']
+        ]);
+
+        if (request()->avatar) {
+            request()->file('avatar')->store('public');
+            $fileName = request()->file('avatar')->hashName();
+            $attributes['avatar'] = $fileName;
+        }
+
+        $project->update($attributes);
 
         return redirect('/projects');
     }
 
     public function destroy(Project $project)
-
     {
         $project->delete();
 
@@ -72,7 +79,6 @@ class ProjectsController extends Controller
     }
 
     public function show(Project $project)
-
     {
         return view('projects.show', compact('project'));
     }

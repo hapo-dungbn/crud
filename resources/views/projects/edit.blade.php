@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('title')
-    Create
+    Edit
 @endsection
 
 @section('content')
@@ -11,7 +11,7 @@
     </div>
 
     <div class="mb-3">
-        <form method="POST" action="/projects/{{ $project->id }}">
+        <form method="POST" action="/projects/{{ $project->id }}" enctype="multipart/form-data">
 
             @method('PATCH')
             @csrf
@@ -25,26 +25,27 @@
             <div>
                 <span>Date of birth:</span>
                 <div>
-                    <input type="text" name="dob" value="{{ $project->dob }}">
+                    <input type="date" name="dob" value="{{ $project->dob }}">
                 </div>
             </div>
             <div>
                 <span>Gender:</span>
                 <div>
                     <label class="form-check-inline m-0">
-                        <input class="mr-1" type="radio" name="gender" value="1" checked> Male
+                        <input class="mr-1" type="radio" name="gender" value="1" {{ $project->gender ? 'checked' : '' }}> Male
                     </label>
                     <label class="form-check-inline m-0">
-                        <input class="mr-1" type="radio" name="gender" value="0"> Female
+                        <input class="mr-1" type="radio" name="gender" value="0" {{ !$project->gender ? 'checked' : '' }}> Female
                     </label>
                 </div>
             </div>
             <div>
                 <label id="avatar">
-                    <input type="file" name="avatar" class="d-none" for="avatar">
-                    <img src="{{ asset('storage/'.$project->avatar) }}" class="w-25">
-                </label>
+                    <input type="file" name="avatar" class="d-none" for="avatar" id="profile-img">
+                    {{--<img id="profile-img-tag" src="{{ asset('storage/'.$project->avatar) }}" class="w-25">--}}
+                    <img id="profile-img-tag" src="{{ $project->avatar ? asset('storage/'.$project->avatar) : asset('/storage/defaultavatar.png')  }}" class="w-25">
 
+                </label>
             </div>
             <div>
                 <span>Mail:</span>
@@ -73,7 +74,7 @@
     </div>
 
     @if ($errors -> any())
-        <div class=" d-flex justify-content-center">
+        <div>
             <ul class="bg-danger">
                 @foreach($errors->all() as $error)
                     <li class="text-white">{{ $error }}</li>
@@ -81,7 +82,5 @@
             </ul>
         </div>
     @endif
-
-
 
 @endsection

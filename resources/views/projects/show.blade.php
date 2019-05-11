@@ -1,11 +1,8 @@
 @extends('layout')
-
 @section('title')
     Show
 @endsection
-
 @section('content')
-
     <div class="d-flex justify-content-center">
         <div class="w-50 d-flex justify-content-end pr-3">
             <div class="w-50">
@@ -45,11 +42,6 @@
                 <span><b>Description:</b></span>
                 <span>{{ $project->description }}</span>
             </div>
-
-
         </div>
     </div>
-
-
 @endsection
-

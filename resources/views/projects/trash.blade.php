@@ -1,13 +1,13 @@
 @extends('layout')
 @section('title')
-    Home
+    Trash
 @endsection
 @section('content')
     <div class="d-flex justify-content-center mb-4">
-        <h1>Manage</h1>
+        <h1>Trash</h1>
     </div>
     <div class="mb-3">
-        <table class="table table-bordered table-hover table-dark m-0 mb-2">
+        <table class="table table-bordered table-hover table-dark m-0">
             <thead>
             <tr>
                 <th>Name</th>
@@ -26,29 +26,25 @@
                     <td>{{ $project->mail }}</td>
                     <td>{{ $project->phone }}</td>
                     <td>
-                        <a href="{{ route('projects.show', $project->id) }}" class="btn btn-success">Show</a>
-                    </td>
-                    <td>
-                        <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-primary">Edit</a>
-                    </td>
-                    <td>
-                        <form method="POST" action="{{ route('projects.destroy', $project->id) }}">
+                        <form method="POST" action="{{ route('projects.restore', $project->id) }}">
                             @method('DELETE')
                             @csrf
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                            <input type="hidden" value="{{ $projects->currentPage() }}" name="current_page">
+                            <button type="submit" class="btn btn-danger">Restore</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="POST" action="{{ route('projects.deleteforever', $project->id) }}">
+                            @method('DELETE')
+                            @csrf
+                            <button type="submit" class="btn btn-danger">Delete forever</button>
                         </form>
                     </td>
                 <tr>
             @endforeach
             </tbody>
         </table>
-    </div>
-    <div class="d-flex justify-content-end">
-        {{ $projects->links() }}
-    </div>
-    <div class="d-flex justify-content-center">
-        <a href="{{ route('projects.create') }}" class="btn btn-danger mr-2">Add new</a>
-        <a href="{{ route('projects.trash') }}" class="btn btn-secondary">View trash</a>
+        <div class="d-flex justify-content-center">
+            <a href="{{ route('projects.index') }}" class="btn btn-success mt-3">Home</a>
+        </div>
     </div>
 @endsection

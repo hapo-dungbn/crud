@@ -23,6 +23,7 @@ class CreateProjectsTable extends Migration
             $table->string('description')->nullable();
             $table->text('avatar')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

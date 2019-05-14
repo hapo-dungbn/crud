@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Project\Store;
 use App\Project;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,11 +26,13 @@ class ProjectsController extends Controller
         $data = $request->all();
         if ($request->avatar) {
             $request->file('avatar')->store('public');
-            $fileName = $request->file('avatar')->hashName();
+            $fileName = $request->file('avatar')
+                ->hashName();
             $data['avatar'] = $fileName;
         }
         Project::create($data);
-        return redirect()->route('projects.index');
+        return redirect()->route('projects.index')
+            ->with('status', 'Created successful');
     }
 
     public function edit(Project $project)
@@ -39,27 +42,36 @@ class ProjectsController extends Controller
 
     public function update(Project $project, Store $request)
     {
-        $data = $project->avatar;
-        $newData = $request->all();
+        $avatar = $project->avatar;
+        $data = $request->all();
         if ($request->avatar) {
-            if (Storage::disk('public')->exists($data)) {
-                Storage::disk('public')->delete($data);
+            if (Storage::disk('public')->exists($avatar)) {
+                Storage::disk('public')->delete($avatar);
             }
-            $request->file('avatar')->store('public');
-            $fileName = $request->file('avatar')->hashName();
-            $newData['avatar'] = $fileName;
+            $request->file('avatar')
+                ->store('public');
+            $fileName = $request->file('avatar')
+                ->hashName();
+            $data['avatar'] = $fileName;
         }
-        $project->update($newData);
-        return redirect()->route('projects.index');
+        $project->update($data);
+        return redirect()->route('projects.index')
+            ->with('status', 'Updated successful');
     }
 
     public function destroy(Project $project, Request $request)
     {
-        $current = $request->current_page;
         $project->delete();
-        return redirect()->route('projects.index', ['page' => $current]);
+        $countProjects = $project->all()
+            ->count();
+        $paginates = config('app.paginate');
+        $currentPage = $request->currentPage;
+        if (($countProjects % $paginates) == 0) {
+            $currentPage--;
+        }
+        return redirect()->route('projects.index', ['page' => $currentPage])
+            ->with('status', 'Move to trash successful');
     }
-
 
     public function show(Project $project)
     {
@@ -72,15 +84,18 @@ class ProjectsController extends Controller
         return view('projects.trash', compact('projects'));
     }
 
-    public function deletfForever($id)
+    public function deleteForever($id)
     {
-        Project::withTrashed()->where('id', $id)->forceDelete();
-        return redirect()->route('projects.trash');
+        Project::withTrashed()->where('id', $id)
+            ->forceDelete();
+        return redirect()->route('projects.trash')
+            ->with('status', 'Deleted successful');
     }
 
     public function restore($id)
     {
-        Project::withTrashed()->where('id', $id)->restore();
+        Project::withTrashed()->where('id', $id)
+            ->restore();
         return redirect()->route('projects.trash');
     }
 }

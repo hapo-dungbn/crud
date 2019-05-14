@@ -6,6 +6,11 @@
     <div class="d-flex justify-content-center mb-4">
         <h1>Trash</h1>
     </div>
+    @if (session('status'))
+        <div class="alert alert-success show-message">
+            {{ session('status') }}
+        </div>
+    @endif
     <div class="mb-3">
         <table class="table table-bordered table-hover table-dark m-0">
             <thead>

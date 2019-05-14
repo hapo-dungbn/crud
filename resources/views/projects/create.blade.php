@@ -33,7 +33,7 @@
             <div class="form-group">
                 <label id="avatar">
                     <input type="file" name="avatar" class="d-none" for="avatar" id="profile-img">
-                    <img id="profile-img-tag" src="/storage/defaultavatar.png" class="w-25">
+                    <img id="profile-img-tag" src="/storage/default_avatar.png" class="w-25">
                 </label>
             </div>
             <div class="form-group">

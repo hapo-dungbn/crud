@@ -6,18 +6,23 @@
     <div class="mb-4">
         <h1>Edit</h1>
     </div>
+    @if (session('status'))
+        <div class="alert alert-success show-message">
+            {{ session('status') }}
+        </div>
+    @endif
     <div class="mb-3">
         <form method="POST" action="{{ route('projects.update', $project->id) }}" enctype="multipart/form-data">
             @method('PATCH')
             @csrf
             <div class="form-group">
                 <label for="inputName">Name:</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" id="inputName" type="text" name="name" value="{{ $project->name }}">
+                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" id="inputName" type="text" name="name" value="{{ old('name') ? old('name') : $project->name }}">
                 <h6 class="text-danger">{{ $errors->first('name') }}</h6>
             </div>
             <div class="form-group">
                 <label for="inputDate">Date of birth:</label>
-                <input class="form-control {{ $errors->has('dob') ? 'is-invalid' : '' }}" id="inputDate" type="date" name="dob" value="{{ $project->dob }}">
+                <input class="form-control {{ $errors->has('dob') ? 'is-invalid' : '' }}" id="inputDate" type="date" name="dob" value="{{ old('dob') ? old('dob') : $project->dob }}">
                 <h6 class="text-danger">{{ $errors->first('dob') }}</h6>
             </div>
             <div class="form-group">
@@ -32,19 +37,19 @@
                 </div>
             </div>
             <div class="form-group">
-                <label id="avatar">
+                <label id="userAvatar">
                     <input type="file" name="avatar" class="d-none" for="avatar" id="profile-img">
-                    <img id="profile-img-tag" src="{{ $project->avatar ? asset('storage/'.$project->avatar) : asset('/storage/defaultavatar.png')  }}" class="w-25">
+                    <img id="profile-img-tag" src="{{ $project->avatar ? asset('storage/'.$project->avatar) : asset('/storage/default_avatar.png')  }}" class="w-25">
                 </label>
             </div>
             <div class="form-group">
                 <label for="inputEmail">Mail:</label>
-                <input class="form-control {{ $errors->has('mail') ? 'is-invalid' : '' }}" id="inputEmail" type="text" name="mail" value="{{ $project->mail }}">
+                <input class="form-control {{ $errors->has('mail') ? 'is-invalid' : '' }}" id="inputEmail" type="text" name="mail" value="{{ old('mail') ? old('mail') : $project->mail }}">
                 <h6 class="text-danger">{{ $errors->first('mail') }}</h6>
             </div>
             <div class="form-group">
                 <label for="inputPhone">Phone:</label>
-                <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" id="inputPhone" type="text" name="phone" value="{{ $project->phone }}">
+                <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" id="inputPhone" type="text" name="phone" value="{{ old('phone') ? old('phone') : $project->phone }}">
                 <h6 class="text-danger">{{ $errors->first('phone') }}</h6>
             </div>
             <div class="form-group">

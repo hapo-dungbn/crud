@@ -6,6 +6,11 @@
     <div class="d-flex justify-content-center mb-4">
         <h1>Manage</h1>
     </div>
+    @if (session('status'))
+        <div class="alert alert-success show-message">
+            {{ session('status') }}
+        </div>
+    @endif
     <div class="mb-3">
         <table class="table table-bordered table-hover table-dark m-0 mb-2">
             <thead>
@@ -21,7 +26,7 @@
             @foreach($projects as $project)
                 <tr>
                     <td>{{ $project->name }}</td>
-                    <td>{{ $project->dob }}</td>
+                    <td>{{ $project->date_convert }}</td>
                     <td>{{ $project->gender ? 'Male' : 'Female' }}</td>
                     <td>{{ $project->mail }}</td>
                     <td>{{ $project->phone }}</td>
@@ -36,7 +41,7 @@
                             @method('DELETE')
                             @csrf
                             <button type="submit" class="btn btn-danger">Delete</button>
-                            <input type="hidden" value="{{ $projects->currentPage() }}" name="current_page">
+                            <input type="hidden" value="{{ $projects->currentPage() }}" name="currentPage">
                         </form>
                     </td>
                 <tr>

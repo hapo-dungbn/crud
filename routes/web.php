@@ -14,13 +14,9 @@
 Route::get('/', function () {
     return redirect('/projects');
 });
-
 Route::group ( ['prefix' => 'projects'], function () {
     Route::get('trash', 'ProjectsController@trash')->name('projects.trash');
     Route::delete('trash/{id}', 'ProjectsController@deleteForever')->name('projects.delete_forever');
     Route::delete('trash-restore/{id}', 'ProjectsController@restore')->name('projects.restore');
 });
-
 Route::resource('projects', 'ProjectsController');
-
-

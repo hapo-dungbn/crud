@@ -9,24 +9,27 @@
     <title>@yield('title')</title>
 </head>
 <body>
-<div class="container pt-5">
-    @yield('content')
-</div>
-<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-<script>
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+    <div class="container pt-5">
+        @yield('content')
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
-            reader.onload = function (e) {
-                $('#profile-img-tag').attr('src', e.target.result);
+                reader.onload = function (e) {
+                    $('#profile-img-tag').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
             }
-            reader.readAsDataURL(input.files[0]);
         }
-    }
-    $("#profile-img").change(function(){
-        readURL(this);
-    });
-</script>
+        $("#profile-img").change(function(){
+            readURL(this);
+        });
+        $(document).ready(function () {
+            $("div.show-message").slideUp(2000).delay(1000).fadeOut(1000);
+        })
+    </script>
 </body>
 </html>

@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Project\Store;
 use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectsController extends Controller
 {
     public function index()
     {
-        $projects = Project::paginate(5);
+        $projects = Project::paginate(config('app.paginate'));
         return view('projects.index', compact('projects'));
     }
 
@@ -21,30 +22,39 @@ class ProjectsController extends Controller
 
     public function store(Store $request)
     {
-        $attributes = $request->validated();
+        $data = $request->all();
         if ($request->avatar) {
             $request->file('avatar')->store('public');
+            // $filename là tên tự sinh ra nên k trùng đc
             $fileName = $request->file('avatar')->hashName();
-            $attributes['avatar'] = $fileName;
+            $data['avatar'] = $fileName;
         }
-        Project::create($attributes);
+        Project::create($data);
+
         return redirect()->route('projects.index');
     }
 
     public function edit(Project $project)
     {
+
         return view('projects.edit', compact('project'));
     }
 
     public function update(Project $project, Store $request)
     {
-        $attributes = $request->validated();
+        $data = $project->avatar;
+        $newData = $request->all();
         if ($request->avatar) {
+            if (Storage::disk('public')->exists($data)) {
+                Storage::disk('public')->delete($data);
+            }
             $request->file('avatar')->store('public');
+            // $filename là tên tự sinh ra nên k trùng đc
             $fileName = $request->file('avatar')->hashName();
-            $attributes['avatar'] = $fileName;
+            $newData['avatar'] = $fileName;
         }
-        $project->update($attributes);
+        $project->update($newData);
+
         return redirect()->route('projects.index');
     }
 
@@ -63,7 +73,7 @@ class ProjectsController extends Controller
 
     public function trash()
     {
-        $projects = Project::onlyTrashed()->get();
+        $projects = Project::onlyTrashed()->paginate(config('app.paginate'));
         return view('projects.trash', compact('projects'));
     }
 

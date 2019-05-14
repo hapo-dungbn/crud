@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Project;
 
+use App\Rules\NameFormat;
+use App\Rules\PhoneFormat;
 use Illuminate\Foundation\Http\FormRequest;
 
 class Store extends FormRequest
@@ -24,11 +26,11 @@ class Store extends FormRequest
     public function rules()
     {
         return [
-            'name'   => ['required', 'min:4', 'max:255', 'regex:/^[a-zA-Z0-9\]*[a-zA-Z]+[a-zA-Z0-9\s]*$/'],
+            'name'   => ['required', 'min:4', 'max:255', new NameFormat()],
             'dob'    => ['required'],
             'gender' => ['required'],
             'mail'   => ['required', 'email'],
-            'phone'  => ['required', 'regex:/^([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])$/'],
+            'phone'  => ['required', new PhoneFormat()],
             'description' => '',
             'avatar' => ['max:3000', 'image']
         ];

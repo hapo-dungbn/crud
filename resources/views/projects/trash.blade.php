@@ -43,8 +43,11 @@
             @endforeach
             </tbody>
         </table>
-        <div class="d-flex justify-content-center">
-            <a href="{{ route('projects.index') }}" class="btn btn-success mt-3">Home</a>
-        </div>
+    </div>
+    <div class="d-flex justify-content-end">
+        {{ $projects->links() }}
+    </div>
+    <div class="d-flex justify-content-center">
+        <a href="{{ route('projects.index') }}" class="btn btn-success">Home</a>
     </div>
 @endsection

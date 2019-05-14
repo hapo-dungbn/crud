@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'Asia/Jakarta',
+    'timezone' => 'UTC',
 
     /*
     |--------------------------------------------------------------------------
@@ -227,5 +227,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
+
+    'paginate' => env('PAGINATE', 2),
 
 ];

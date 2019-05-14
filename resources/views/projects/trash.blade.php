@@ -33,7 +33,7 @@
                         </form>
                     </td>
                     <td>
-                        <form method="POST" action="{{ route('projects.deleteforever', $project->id) }}">
+                        <form method="POST" action="{{ route('projects.delete_forever', $project->id) }}">
                             @method('DELETE')
                             @csrf
                             <button type="submit" class="btn btn-danger">Delete forever</button>

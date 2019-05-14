@@ -25,18 +25,15 @@ class ProjectsController extends Controller
         $data = $request->all();
         if ($request->avatar) {
             $request->file('avatar')->store('public');
-            // $filename là tên tự sinh ra nên k trùng đc
             $fileName = $request->file('avatar')->hashName();
             $data['avatar'] = $fileName;
         }
         Project::create($data);
-
         return redirect()->route('projects.index');
     }
 
     public function edit(Project $project)
     {
-
         return view('projects.edit', compact('project'));
     }
 
@@ -49,12 +46,10 @@ class ProjectsController extends Controller
                 Storage::disk('public')->delete($data);
             }
             $request->file('avatar')->store('public');
-            // $filename là tên tự sinh ra nên k trùng đc
             $fileName = $request->file('avatar')->hashName();
             $newData['avatar'] = $fileName;
         }
         $project->update($newData);
-
         return redirect()->route('projects.index');
     }
 
@@ -77,7 +72,7 @@ class ProjectsController extends Controller
         return view('projects.trash', compact('projects'));
     }
 
-    public function deleteforever($id)
+    public function deletfForever($id)
     {
         Project::withTrashed()->where('id', $id)->forceDelete();
         return redirect()->route('projects.trash');

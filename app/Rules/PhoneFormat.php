@@ -26,10 +26,8 @@ class PhoneFormat implements Rule
     public function passes($attribute, $value)
     {
         if (preg_match('/^[0-9]*[0-9]+[0-9]*$/', $value)) {
-
             return true;
         }
-
         return false;
     }
 

@@ -24,18 +24,11 @@ class NameFormat implements Rule
      * @return bool
      */
     public function passes($attribute, $value)
-
-
-
-
     {
         if (preg_match('/^[a-zA-Z0-9 ]*[a-zA-Z0-9 ]+[a-zA-Z0-9 ]*$/', $value)) {
-
             return true;
         }
-
         return false;
-
     }
 
     /**

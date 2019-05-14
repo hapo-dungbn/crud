@@ -17,8 +17,8 @@ Route::get('/', function () {
 
 Route::group ( ['prefix' => 'projects'], function () {
     Route::get('trash', 'ProjectsController@trash')->name('projects.trash');
-    Route::delete('trash/{projectId}', 'ProjectsController@deleteforever')->name('projects.deleteforever');
-    Route::delete('trash-restore/{projectId}', 'ProjectsController@restore')->name('projects.restore');
+    Route::delete('trash/{id}', 'ProjectsController@deleteForever')->name('projects.delete_forever');
+    Route::delete('trash-restore/{id}', 'ProjectsController@restore')->name('projects.restore');
 });
 
 Route::resource('projects', 'ProjectsController');

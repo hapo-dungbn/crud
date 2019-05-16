@@ -12,6 +12,14 @@
         </div>
     @endif
     <div class="mb-3">
+        <div>
+            <form method="get" action="{{ route('projects.index') }}">
+                <div class="form-group d-flex">
+                    <input type="search" name="search" class="form-control mr-2">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
+        </div>
         <table class="table table-bordered table-hover table-dark m-0 mb-2">
             <thead>
             <tr>

@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Project\Create;
 use App\Http\Requests\Project\Store;
 use App\Project;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ProjectsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if($request->all()) {
+            $projects = Project::where('name', $request->all())->paginate(config('app.paginate'));
+            return view('projects.index', compact('projects'));
+        }
         $projects = Project::paginate(config('app.paginate'));
         return view('projects.index', compact('projects'));
     }
@@ -21,7 +25,7 @@ class ProjectsController extends Controller
         return view('projects.create');
     }
 
-    public function store(Store $request)
+    public function store(Create $request)
     {
         $data = $request->all();
         if ($request->avatar) {

@@ -6,7 +6,7 @@ use App\Rules\NameFormat;
 use App\Rules\PhoneFormat;
 use Illuminate\Foundation\Http\FormRequest;
 
-class Store extends FormRequest
+class Create extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,7 +29,7 @@ class Store extends FormRequest
             'name'   => ['required', 'min:4', 'max:255', new NameFormat()],
             'dob'    => ['required', 'date'],
             'gender' => ['required'],
-            'mail'   => ['required', 'unique:projects,mail,'.$this->project->id,'email'],
+            'mail'   => ['required', 'unique:projects','email'],
             'phone'  => ['required', 'min:10', 'max:11', new PhoneFormat()],
             'description' => '',
             'avatar' => ['max:3000', 'image']

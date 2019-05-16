@@ -18,12 +18,10 @@ class Project extends Model
     }
 
     public function getCreatTimeAttribute() {
-        $time = Carbon::parse($this->created_at)->format('d/m/Y');
-        return $time;
+        return $time = Carbon::parse($this->created_at)->format('d/m/Y');
     }
 
     public function getUpdateTimeAttribute() {
-        $time = Carbon::parse($this->updated_at)->format('d/m/Y');
-        return $time;
+        return Carbon::parse($this->updated_at)->format('d/m/Y');
     }
 }
